@@ -38,4 +38,4 @@ var TestFixtureDto = (function () {
     return TestFixtureDto;
 })();
 exports.TestFixtureDto = TestFixtureDto;
-//# sourceMappingURL=TestDto.js.map
+//# sourceMappingURL=testDto.js.map

@@ -1,7 +1,9 @@
 ///<reference path='../../_all.d.ts'/>
+///<reference path='../../d.ts/vendor/node.d.ts'/>
+///<reference path='../../d.ts/vendor/underscore.d.ts'/>
 ///<reference path='../../d.ts/interfaces.d.ts'/>
 
-import dto = require("./TestDto");
+import dto = require("./testDto");
 
 var _ = require('underscore')._;
 
