@@ -5,6 +5,11 @@
 var dto = require("./testDto");
 
 var _ = require('underscore')._;
+var Parsimmon = require('parsimmon');
+
+var regex = Parsimmon.regex;
+var str = Parsimmon.string;
+var optWhitespace = Parsimmon.optWhitespace;
 
 var HaskellParser = (function () {
     function HaskellParser() {
@@ -18,6 +23,28 @@ var HaskellParser = (function () {
         });
 
         return [testFixture];
+    };
+
+    HaskellParser.prototype.parseReal = function (contents) {
+        var id = function (i) {
+            return i;
+        };
+
+        var testKeyword = str("[TEST]");
+
+        var haskellSuffix = str(".hs");
+        var running = str("RUNNING...");
+        var semicolon = str(":");
+
+        var word = regex("/[A-Z][a-z]*");
+
+        var testSuite = str("Test suite").skip(optWhitespace).then(word).skip(semicolon).skip(optWhitespace).skip(running).skip(optWhitespace).map(id);
+
+        var testName = testKeyword.skip(str("TestFixtures:")).then(word).map(id);
+
+        var sourceFile = optWhitespace.then(regex("/(.*\.hs)/")).map(id);
+
+        var lineNumber = optWhitespace.skip(semicolon).then(Parsimmon.digits).map(parseInt);
     };
     return HaskellParser;
 })();
