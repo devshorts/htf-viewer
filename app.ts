@@ -2,10 +2,11 @@
 
 import Server = require("./src/server");
 import Haskell = require("./src/parsers/haskell");
+var open:any = require("open");
 
 var _ = require('underscore')._;
 
-var server = new Server.Server();
+var server = new Server.Server(process.env.PORT || 3000);
 
 server.start();
 
@@ -17,4 +18,6 @@ var timer = () => setTimeout(() => {
     }, 5000);
 
 timer();
+
+open("http://localhost:" + server.port);
 

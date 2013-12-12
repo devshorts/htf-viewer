@@ -1,0 +1,40 @@
+Test suite Ht1Tests: RUNNING...
+[TEST] TestFixtures:targetMatches (src/tests/TestFixtures.hs:15)
++++ OK (0ms)
+
+[TEST] TestFixtures:isBuyableFalse (src/tests/TestFixtures.hs:18)
+assertEqual failed at src/tests/TestFixtures.hs:18
+* expected: False
+* but got:  True
+* diff:     
+F Fals
+S Tru
+C e<......>C 
+*** Failed! (81ms)
+
+[TEST] TestFixtures:updateCart (src/tests/TestFixtures.hs:21)
++++ OK (0ms)
+
+[TEST] TestFixtures:mapAllItems (src/tests/TestFixtures.hs:27)
++++ OK (0ms)
+
+[TEST] TestFixtures:mapAllItems2 (src/tests/TestFixtures.hs:43)
++++ OK (0ms)
+
+[TEST] TestFixtures:getNth_at_element (src/tests/TestFixtures.hs:59)
++++ OK (0ms)
+
+[TEST] TestFixtures:getNth_one_element_later (src/tests/TestFixtures.hs:63)
++++ OK (0ms)
+
+* Tests:    7
+* Passed:   6
+* Pending:  0
+* Failures: 1
+* Errors:   0
+
+* Failures:  * TestFixtures:isBuyableFalse (src/tests/TestFixtures.hs:18)
+
+Total execution time: 187ms
+Test suite Ht1Tests: FAIL
+Test suite logged to: dist/test/ht1-0.1.0.0-Ht1Tests.log

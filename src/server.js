@@ -5,7 +5,8 @@ var path = require('path');
 var clientReloader = require('./clientReloader');
 
 var Server = (function () {
-    function Server() {
+    function Server(port) {
+        this.port = port;
         this.app = express();
         this.reloader = new clientReloader.LiveReloader();
     }
@@ -15,7 +16,7 @@ var Server = (function () {
 
     Server.prototype.initExpress = function () {
         // all environments
-        this.app.set('port', process.env.PORT || 3000);
+        this.app.set('port', this.port);
         this.app.use(express.favicon());
         this.app.use(express.logger('dev'));
         this.app.use(express.json());

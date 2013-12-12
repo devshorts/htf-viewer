@@ -1,10 +1,11 @@
 ///<reference path='_all.d.ts'/>
 var Server = require("./src/server");
 var Haskell = require("./src/parsers/haskell");
+var open = require("open");
 
 var _ = require('underscore')._;
 
-var server = new Server.Server();
+var server = new Server.Server(process.env.PORT || 3000);
 
 server.start();
 
@@ -18,4 +19,6 @@ var timer = function () {
 };
 
 timer();
+
+open("http://localhost:" + server.port);
 //# sourceMappingURL=app.js.map

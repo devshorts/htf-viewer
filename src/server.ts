@@ -10,7 +10,7 @@ export class Server{
     private app = express();
     private reloader = new clientReloader.LiveReloader();
 
-    constructor(){
+    constructor(public port){
 
     }
 
@@ -20,7 +20,7 @@ export class Server{
 
     private initExpress(){
         // all environments
-        this.app.set('port', process.env.PORT || 3000);
+        this.app.set('port', this.port);
         this.app.use(express.favicon());
         this.app.use(express.logger('dev'));
         this.app.use(express.json());
