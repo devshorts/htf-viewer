@@ -2,6 +2,8 @@
 var Server = require("./src/server");
 var Haskell = require("./src/parsers/haskell");
 
+var _ = require('underscore')._;
+
 var server = new Server.Server();
 
 server.start();
@@ -12,7 +14,7 @@ var timer = function () {
     return setTimeout(function () {
         server.notifyConnections(haskellParser.parse(""));
         timer();
-    }, 1000);
+    }, 5000);
 };
 
 timer();
