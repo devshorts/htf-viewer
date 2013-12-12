@@ -15,15 +15,6 @@ class Tuple{
 export class LiveReloader {
     private clients:Tuple[] = [];
 
-    private data(client:Tuple, data?:any){
-        if(client.req.query.callback){
-            return client.req.query.callback + "(" + data + ")";
-        }
-        else{
-            return data;
-        }
-    }
-
     public trigger(data?:any){
 
         _.forEach(this.clients, (client:Tuple) => {

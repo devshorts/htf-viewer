@@ -18,7 +18,7 @@ export class Server{
         this.reloader.trigger(data);
     }
 
-    initExpress(){
+    private initExpress(){
         // all environments
         this.app.set('port', process.env.PORT || 3000);
         this.app.use(express.favicon());

@@ -1,3 +1,9 @@
+/**
+ * Modified from https://github.com/typpo/connect-autoreload
+ * credit to: Ian Webster
+ * http://www.ianww.com/
+ */
+
 ;function LongPoll(window, $) {
     var xhr;
     this.watch = function(callback) {

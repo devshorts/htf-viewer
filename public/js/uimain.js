@@ -5,11 +5,15 @@ function bootStrap(app){
 }
 
 function initConfig(app){
+    initRoutes(app);
+}
+
+function initRoutes(app){
     app.config(function($stateProvider, $urlRouterProvider) {
-        //
-        // For any unmatched url, redirect to /state1
+
+        // For any unmatched url, redirect to root
         $urlRouterProvider.otherwise("/");
-        //
+
         // Now set up the states
         $stateProvider
             .state('main', {
@@ -20,6 +24,3 @@ function initConfig(app){
     });
 }
 
-function mainCntrl ($scope){
-   $scope.data = "data!";
-}

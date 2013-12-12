@@ -8,12 +8,11 @@
     <script src="js/vendor/angular.js"></script>
     <script src="js/vendor/angular-ui-router.js"></script>
     <script src="js/vendor/underscore-min.js"></script>
+    <script src="js/services/liveLoaderService.js"></script>
     <script src="js/services.js"></script>
+    <script src="js/controllers/mainController.js"></script>
     <script src="js/uimain.js"></script>
     <script>
-        LongPoll.watch(function(data){
-            console.log("reloaded! " + data);
-        });
 
         var app = angular.module('app',["ui.router"]);
 

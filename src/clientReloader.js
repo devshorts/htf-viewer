@@ -15,14 +15,6 @@ var LiveReloader = (function () {
     function LiveReloader() {
         this.clients = [];
     }
-    LiveReloader.prototype.data = function (client, data) {
-        if (client.req.query.callback) {
-            return client.req.query.callback + "(" + data + ")";
-        } else {
-            return data;
-        }
-    };
-
     LiveReloader.prototype.trigger = function (data) {
         _.forEach(this.clients, function (client) {
             try  {
