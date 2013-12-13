@@ -32,6 +32,10 @@ var HaskellParser = (function () {
 
         var testKeyword = str("[TEST]");
 
+        var between = function (parser, a, b) {
+            return str(a).then(parser).skip(str(b)).map(id);
+        };
+
         var haskellSuffix = str(".hs");
         var running = str("RUNNING...");
         var semicolon = str(":");
@@ -42,7 +46,9 @@ var HaskellParser = (function () {
 
         var testName = testKeyword.skip(str("TestFixtures:")).then(word).map(id);
 
-        var sourceFile = optWhitespace.then(regex("/(.*\.hs)/")).map(id);
+        var fileName = regex("/.*\.hs/").map(id);
+
+        var sourceFile = optWhitespace.then(between(fileName, "(", ")")).map(id);
 
         var lineNumber = optWhitespace.skip(semicolon).then(Parsimmon.digits).map(parseInt);
     };

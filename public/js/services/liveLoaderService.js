@@ -26,18 +26,14 @@ function LiveLoaderService($rootScope){
 
         var self = this;
 
-        LongPoll.watch(function(data){
+        var socket = io.connect('http://localhost:3000');
+
+        socket.on('data', function (data) {
             _.forEach(self.allCallbacks, function(callback){
                 callback(data);
             });
 
             $rootScope.$apply();
         });
-    };
-
-    this.stop = function(){
-        LongPoll.stop();
-
-        this.started = false;
     };
 }

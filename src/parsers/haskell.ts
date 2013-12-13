@@ -32,6 +32,8 @@ export class HaskellParser implements IParser {
 
         var testKeyword = str("[TEST]");
 
+        var between = (parser, a, b) => str(a).then(parser).skip(str(b)).map(id)
+
         var haskellSuffix = str(".hs");
         var running = str("RUNNING...");
         var semicolon = str(":");
@@ -54,9 +56,11 @@ export class HaskellParser implements IParser {
                 .then(word)
                 .map(id);
 
+        var fileName = regex("/.*\.hs/").map(id);
+
         var sourceFile =
                 optWhitespace
-                    .then(regex("/(.*\.hs)/"))
+                    .then(between(fileName, "(", ")"))
                     .map(id);
 
         var lineNumber =

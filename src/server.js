@@ -8,7 +8,6 @@ var Server = (function () {
     function Server(port) {
         this.port = port;
         this.app = express();
-        this.reloader = new clientReloader.LiveReloader();
     }
     Server.prototype.notifyConnections = function (data) {
         this.reloader.trigger(data);
@@ -24,17 +23,16 @@ var Server = (function () {
         this.app.use(express.methodOverride());
         this.app.use(this.app.router);
         this.app.use(express.static(path.join(__dirname, '../public')));
-        this.app.use(this.reloader.getMiddleWare());
     };
 
     Server.prototype.start = function () {
         this.initExpress();
 
-        var local = this;
+        var server = http.createServer(this.app);
 
-        http.createServer(this.app).listen(this.app.get('port'), function () {
-            console.log('Express server listening on port ' + local.app.get('port'));
-        });
+        this.reloader = new clientReloader.LiveReloader(server);
+
+        server.listen(this.app.get('port'));
     };
     return Server;
 })();

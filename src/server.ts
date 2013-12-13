@@ -8,7 +8,8 @@ import clientReloader = require('./clientReloader');
 export class Server{
 
     private app = express();
-    private reloader = new clientReloader.LiveReloader();
+
+    private reloader:clientReloader.LiveReloader;
 
     constructor(public port){
 
@@ -28,17 +29,16 @@ export class Server{
         this.app.use(express.methodOverride());
         this.app.use(this.app.router);
         this.app.use(express.static(path.join(__dirname, '../public')));
-        this.app.use(this.reloader.getMiddleWare());
     }
 
     start (){
         this.initExpress();
 
-        var local:Server = this;
+        var server = http.createServer(this.app);
 
-        http.createServer(this.app).listen(this.app.get('port'), function(){
-            console.log('Express server listening on port ' + local.app.get('port'));
-        })
+        this.reloader = new clientReloader.LiveReloader(server);
+
+        server.listen(this.app.get('port'));
     }
 }
 
