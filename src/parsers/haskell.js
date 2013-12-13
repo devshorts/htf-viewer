@@ -33,24 +33,50 @@ var HaskellParser = (function () {
         var testKeyword = str("[TEST]");
 
         var between = function (parser, a, b) {
-            return str(a).then(parser).skip(str(b)).map(id);
+            return str(a).then(parser).skip(str(b)).map(function (result) {
+                return result;
+            });
         };
 
         var haskellSuffix = str(".hs");
         var running = str("RUNNING...");
-        var semicolon = str(":");
+        var colon = str(":");
 
-        var word = regex("/[A-Z][a-z]*");
+        var word = regex(/^([A-Z]|[a-z]|[0-9])*/);
 
-        var testSuite = str("Test suite").skip(optWhitespace).then(word).skip(semicolon).skip(optWhitespace).skip(running).skip(optWhitespace).map(id);
+        var testSuite = str("Test suite").skip(optWhitespace).then(word).skip(colon).skip(optWhitespace).skip(running).skip(optWhitespace).map(id);
 
-        var testName = testKeyword.skip(str("TestFixtures:")).then(word).map(id);
+        var testName = testKeyword.skip(optWhitespace).skip(str("TestFixtures")).skip(colon).then(word).map(id);
 
-        var fileName = regex("/.*\.hs/").map(id);
+        var fileName = regex(/^.*\.hs/).map(id);
 
-        var sourceFile = optWhitespace.then(between(fileName, "(", ")")).map(id);
+        var fileNameWithNumber = fileName.skip(colon).then(function (name) {
+            return Parsimmon.digits.map(function (d) {
+                return {
+                    fileName: name,
+                    lineNumber: d
+                };
+            });
+        });
 
-        var lineNumber = optWhitespace.skip(semicolon).then(Parsimmon.digits).map(parseInt);
+        var sourceFile = optWhitespace.then(between(fileNameWithNumber, "(", ")"));
+
+        var testEntry = testName.then(function (name) {
+            return sourceFile.map(function (sourceInfo) {
+                return {
+                    testName: name,
+                    source: sourceInfo
+                };
+            });
+        });
+
+        var file = testSuite.then(function (suite) {
+            return testEntry.map(function (name) {
+                return [suite, name];
+            });
+        });
+
+        return file.parse(contents);
     };
     return HaskellParser;
 })();

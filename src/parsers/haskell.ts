@@ -9,9 +9,9 @@ import dto = require("./testDto");
 var _ = require('underscore')._;
 var Parsimmon:any = require('parsimmon');
 
-var regex = Parsimmon.regex;
-var str = Parsimmon.string;
-var optWhitespace = Parsimmon.optWhitespace;
+var regex:any = Parsimmon.regex;
+var str:any = Parsimmon.string;
+var optWhitespace:any = Parsimmon.optWhitespace;
 
 export class HaskellParser implements IParser {
     parse(contents:String):ITestFixture[]{
@@ -32,19 +32,21 @@ export class HaskellParser implements IParser {
 
         var testKeyword = str("[TEST]");
 
-        var between = (parser, a, b) => str(a).then(parser).skip(str(b)).map(id)
+        var between = (parser, a, b) => str(a).then(parser).skip(str(b)).map(result => {
+            return result;
+        });
 
         var haskellSuffix = str(".hs");
         var running = str("RUNNING...");
-        var semicolon = str(":");
+        var colon = str(":");
 
-        var word = regex("/[A-Z][a-z]*");
+        var word = regex(/^([A-Z]|[a-z]|[0-9])*/);
 
         var testSuite =
             str("Test suite")
                 .skip(optWhitespace)
                 .then(word)
-                .skip(semicolon)
+                .skip(colon)
                 .skip(optWhitespace)
                 .skip(running)
                 .skip(optWhitespace)
@@ -52,23 +54,40 @@ export class HaskellParser implements IParser {
 
         var testName =
             testKeyword
-                .skip(str("TestFixtures:"))
+                .skip(optWhitespace)
+                .skip(str("TestFixtures"))
+                .skip(colon)
                 .then(word)
                 .map(id);
 
-        var fileName = regex("/.*\.hs/").map(id);
+        var fileName = regex(/^.*\.hs/).map(id);
 
-        var sourceFile =
-                optWhitespace
-                    .then(between(fileName, "(", ")"))
-                    .map(id);
+        var fileNameWithNumber = fileName.skip(colon).then(name => {
+            return Parsimmon.digits.map(d => {
+                return {
+                    fileName: name,
+                    lineNumber: d
+                }
+            });
+        });
 
-        var lineNumber =
-            optWhitespace
-                .skip(semicolon)
-                .then(Parsimmon.digits)
-                .map(parseInt);
+        var sourceFile = optWhitespace.then(between(fileNameWithNumber, "(", ")"));
 
+        var testEntry = testName.then(name => {
+            return sourceFile.map(sourceInfo => {
+                return {
+                    testName: name,
+                    source: sourceInfo
+                }
+            });
+        });
 
+        var file = testSuite.then(suite => {
+            return testEntry.map(name => {
+                return [suite, name]
+            })
+        });
+
+        return file.parse(contents);
     }
 }
