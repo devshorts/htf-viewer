@@ -16,6 +16,8 @@ function parseHaskell(test) {
 
     console.log(result);
 
+    test.equal(result.entries.length, 7, "Didn't parse 7 results");
+    test.equal(result.entries[1].status.pass, false, "Didn't pick up on failed result");
     test.done();
 }
 exports.parseHaskell = parseHaskell;

@@ -97,7 +97,7 @@ var HaskellParser = (function () {
             return passFail.map(function (pf) {
                 return {
                     test: title,
-                    pass: pf
+                    status: pf
                 };
             });
         });

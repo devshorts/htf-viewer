@@ -111,7 +111,7 @@ export class HaskellParser implements IParser {
             return passFail.map(pf => {
                 return {
                     test: title,
-                    pass: pf
+                    status: pf
                 }
             })
         });
