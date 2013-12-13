@@ -7,12 +7,12 @@ var _ = require('underscore')._;
 
 var LiveReloader = (function () {
     function LiveReloader(server) {
-        io = io.listen(server);
+        this.socketManager = io.listen(server);
 
-        io.set('log level', 1);
+        this.socketManager.set('log level', 1);
 
-        io.sockets.on('connection', function (socket) {
-            console.log("recieved client");
+        this.socketManager.sockets.on('connection', function (socket) {
+            console.log("received client");
 
             socket.on("disconnect", function () {
                 return console.log("disconnected");
@@ -20,7 +20,7 @@ var LiveReloader = (function () {
         });
     }
     LiveReloader.prototype.trigger = function (data) {
-        io.sockets.json.emit("data", data);
+        this.socketManager.sockets.json.emit("data", data);
     };
     return LiveReloader;
 })();

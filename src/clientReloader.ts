@@ -10,14 +10,16 @@ var _ = require('underscore')._;
 
 export class LiveReloader {
 
+    private socketManager:SocketManager;
+
     constructor(server){
 
-        io = io.listen(server);
+        this.socketManager = io.listen(server);
 
-        io.set('log level', 1);
+        this.socketManager.set('log level', 1);
 
-        io.sockets.on('connection', socket => {
-            console.log("recieved client");
+        this.socketManager.sockets.on('connection', socket => {
+            console.log("received client");
 
             socket.on("disconnect", () => console.log("disconnected"));
         });
@@ -25,6 +27,6 @@ export class LiveReloader {
     }
 
     public trigger(data?:any){
-        io.sockets.json.emit("data", data);
+        this.socketManager.sockets.json.emit("data", data);
     }
 }
