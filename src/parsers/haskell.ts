@@ -40,7 +40,7 @@ export class HaskellParser implements IParser {
         var running = str("RUNNING...");
         var colon = str(":");
 
-        var word = regex(/^([A-Z]|[a-z]|[0-9])*/);
+        var word = regex(/^([A-Z]|[a-z]|[0-9]|_)*/);
 
         var testSuite =
             str("Test suite")
@@ -73,20 +73,57 @@ export class HaskellParser implements IParser {
 
         var sourceFile = optWhitespace.then(between(fileNameWithNumber, "(", ")"));
 
-        var testEntry = testName.then(name => {
+        var testTitle = testName.then(name => {
             return sourceFile.map(sourceInfo => {
                 return {
                     testName: name,
                     source: sourceInfo
                 }
             });
+        }).skip(optWhitespace);
+
+        var ms = Parsimmon.digits.skip(str("ms"));
+
+        var time = optWhitespace
+            .then(between(ms, "(", ")"))
+            .skip(optWhitespace);
+
+        var testSuccess = str("+++ OK").then(time).map(t => {
+            return {
+                pass: true,
+                time: t
+            }
+        });
+
+        var testFailure = regex(/^[\s\S]+Failed!/).then(rawFailure => {
+            return time.map(t => {
+                return {
+                    pass: false,
+                    time: t,
+                    raw: rawFailure
+                }
+            })
+        });
+
+        var passFail = testSuccess.or(testFailure).skip(optWhitespace);
+
+        var test = testTitle.then(title => {
+            return passFail.map(pf => {
+                return {
+                    test: title,
+                    pass: pf
+                }
+            })
         });
 
         var file = testSuite.then(suite => {
-            return testEntry.map(name => {
-                return [suite, name]
+            return test.many().map(entries => {
+                return {
+                    suite: suite,
+                    entries: entries
+                }
             })
-        });
+        }).skip(Parsimmon.all);
 
         return file.parse(contents);
     }

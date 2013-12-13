@@ -42,7 +42,7 @@ var HaskellParser = (function () {
         var running = str("RUNNING...");
         var colon = str(":");
 
-        var word = regex(/^([A-Z]|[a-z]|[0-9])*/);
+        var word = regex(/^([A-Z]|[a-z]|[0-9]|_)*/);
 
         var testSuite = str("Test suite").skip(optWhitespace).then(word).skip(colon).skip(optWhitespace).skip(running).skip(optWhitespace).map(id);
 
@@ -61,20 +61,55 @@ var HaskellParser = (function () {
 
         var sourceFile = optWhitespace.then(between(fileNameWithNumber, "(", ")"));
 
-        var testEntry = testName.then(function (name) {
+        var testTitle = testName.then(function (name) {
             return sourceFile.map(function (sourceInfo) {
                 return {
                     testName: name,
                     source: sourceInfo
                 };
             });
+        }).skip(optWhitespace);
+
+        var ms = Parsimmon.digits.skip(str("ms"));
+
+        var time = optWhitespace.then(between(ms, "(", ")")).skip(optWhitespace);
+
+        var testSuccess = str("+++ OK").then(time).map(function (t) {
+            return {
+                pass: true,
+                time: t
+            };
+        });
+
+        var testFailure = regex(/^[\s\S]+Failed!/).then(function (rawFailure) {
+            return time.map(function (t) {
+                return {
+                    pass: false,
+                    time: t,
+                    raw: rawFailure
+                };
+            });
+        });
+
+        var passFail = testSuccess.or(testFailure).skip(optWhitespace);
+
+        var test = testTitle.then(function (title) {
+            return passFail.map(function (pf) {
+                return {
+                    test: title,
+                    pass: pf
+                };
+            });
         });
 
         var file = testSuite.then(function (suite) {
-            return testEntry.map(function (name) {
-                return [suite, name];
+            return test.many().map(function (entries) {
+                return {
+                    suite: suite,
+                    entries: entries
+                };
             });
-        });
+        }).skip(Parsimmon.all);
 
         return file.parse(contents);
     };
