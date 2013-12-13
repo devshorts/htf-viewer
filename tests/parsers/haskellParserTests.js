@@ -12,7 +12,7 @@ function get(file) {
 function parseHaskell(test) {
     var contents = get("shortTest.sample");
 
-    var result = parser.parseReal(contents);
+    var result = parser.parseFile(contents);
 
     console.log(result);
 

@@ -27,97 +27,9 @@ export class HaskellParser implements IParser {
         return [testFixture];
     }
 
-    parseReal(contents:String){
-        var id = i => i;
-
-        var testKeyword = str("[TEST]");
-
-        var between = (parser, a, b) => str(a).then(parser).skip(str(b)).map(result => {
-            return result;
-        });
-
-        var haskellSuffix = str(".hs");
-        var running = str("RUNNING...");
-        var colon = str(":");
-
-        var word = regex(/^([A-Z]|[a-z]|[0-9]|_)*/);
-
-        var testSuite =
-            str("Test suite")
-                .skip(optWhitespace)
-                .then(word)
-                .skip(colon)
-                .skip(optWhitespace)
-                .skip(running)
-                .skip(optWhitespace)
-                .map(id);
-
-        var testName =
-            testKeyword
-                .skip(optWhitespace)
-                .skip(str("TestFixtures"))
-                .skip(colon)
-                .then(word)
-                .map(id);
-
-        var fileName = regex(/^.*\.hs/).map(id);
-
-        var fileNameWithNumber = fileName.skip(colon).then(name => {
-            return Parsimmon.digits.map(d => {
-                return {
-                    fileName: name,
-                    lineNumber: d
-                }
-            });
-        });
-
-        var sourceFile = optWhitespace.then(between(fileNameWithNumber, "(", ")"));
-
-        var testTitle = testName.then(name => {
-            return sourceFile.map(sourceInfo => {
-                return {
-                    testName: name,
-                    source: sourceInfo
-                }
-            });
-        }).skip(optWhitespace);
-
-        var ms = Parsimmon.digits.skip(str("ms"));
-
-        var time = optWhitespace
-            .then(between(ms, "(", ")"))
-            .skip(optWhitespace);
-
-        var testSuccess = str("+++ OK").then(time).map(t => {
-            return {
-                pass: true,
-                time: t
-            }
-        });
-
-        var testFailure = regex(/^[\s\S]+Failed!/).then(rawFailure => {
-            return time.map(t => {
-                return {
-                    pass: false,
-                    time: t,
-                    raw: rawFailure
-                }
-            })
-        });
-
-        var passFail = testSuccess.or(testFailure).skip(optWhitespace);
-
-        var test = testTitle.then(title => {
-            return passFail.map(pf => {
-                return {
-                    test: title,
-                    status: pf
-                }
-            })
-        });
-
-        var file = testSuite.then(suite => {
-            return test.many().map(entries => {
+    parseFile(contents:String){
+        var file = this.testSuite().then(suite => {
+            return this.test().many().map(entries => {
                 return {
                     suite: suite,
                     entries: entries
@@ -127,4 +39,99 @@ export class HaskellParser implements IParser {
 
         return file.parse(contents);
     }
+
+
+    private between(parser, a, b){
+        return str(a).then(parser).skip(str(b));
+    }
+
+    private testKeyword = str("[TEST]");
+
+    private running = str("RUNNING...");
+
+    private colon = str(":");
+
+    private word = regex(/^([A-Z]|[a-z]|[0-9]|_)*/);
+
+    testSuite(){
+        return str("Test suite")
+            .skip(optWhitespace)
+            .then(this.word)
+            .skip(this.colon)
+            .skip(optWhitespace)
+            .skip(this.running)
+            .skip(optWhitespace);
+    }
+
+    test(){
+        return this.testTitle().then(title => {
+            return this.passFail().map(pf => {
+                return {
+                    test: title,
+                    status: pf
+                }
+            })
+        });
+    }
+
+    testTitle(){
+        var testName =
+            this.testKeyword
+                .skip(optWhitespace)
+                .skip(str("TestFixtures"))
+                .skip(this.colon)
+                .then(this.word);
+
+        var fileName = regex(/^.*\.hs/);
+
+        var fileNameWithNumber = fileName.skip(this.colon).then(name => {
+            return Parsimmon.digits.map(d => {
+                return {
+                    fileName: name,
+                    lineNumber: d
+                }
+            });
+        });
+
+        var sourceFile = optWhitespace.then(this.between(fileNameWithNumber, "(", ")"));
+
+        return testName.then(name => {
+            return sourceFile.map(sourceInfo => {
+                return {
+                    testName: name,
+                    source: sourceInfo
+                }
+            });
+        }).skip(optWhitespace);
+    }
+
+    time(){
+        var ms = Parsimmon.digits.skip(str("ms"));
+
+        return optWhitespace
+            .then(this.between(ms, "(", ")"))
+            .skip(optWhitespace);
+    }
+
+    passFail(){
+        var testSuccess = str("+++ OK").then(this.time()).map(t => {
+            return {
+                pass: true,
+                time: t
+            }
+        });
+
+        var testFailure = regex(/^[\s\S]+Failed!/).then(rawFailure => {
+            return this.time().map(t => {
+                return {
+                    pass: false,
+                    time: t,
+                    raw: rawFailure
+                }
+            })
+        });
+
+        return testSuccess.or(testFailure).skip(optWhitespace);
+    }
+
 }

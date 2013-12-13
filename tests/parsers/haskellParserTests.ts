@@ -14,7 +14,7 @@ function get(file){
 export function parseHaskell(test:INodeUnitTest){
     var contents = get("shortTest.sample");
 
-    var result = parser.parseReal(contents);
+    var result = parser.parseFile(contents);
 
     console.log(result);
 
