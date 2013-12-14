@@ -2,13 +2,12 @@
 var Server = require("./src/server");
 var Haskell = require("./src/parsers/haskell");
 var FileWatcher = require("./src/fileWatcher");
+var fs = require("fs");
 var open = require("open");
 
 var haskellParser = new Haskell.HaskellParser();
 
-var config = {
-    watch: ["/Users/akropp/Projects/code/Playground/ht1/dist/test/"]
-};
+var config = JSON.parse(fs.readFileSync(process.cwd() + "/hconfig.json"));
 
 var server = new Server.Server(process.env.PORT || 3000);
 
