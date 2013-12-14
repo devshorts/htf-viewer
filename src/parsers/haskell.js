@@ -2,11 +2,9 @@
 ///<reference path='../../d.ts/vendor/node.d.ts'/>
 ///<reference path='../../d.ts/vendor/underscore.d.ts'/>
 ///<reference path='../../d.ts/interfaces.d.ts'/>
-var dto = require("./testDto");
+var fs = require("fs");
 
-var _ = require('underscore')._;
 var Parsimmon = require('parsimmon');
-
 var regex = Parsimmon.regex;
 var str = Parsimmon.string;
 var optWhitespace = Parsimmon.optWhitespace;
@@ -18,18 +16,13 @@ var HaskellParser = (function () {
         this.colon = str(":");
         this.word = regex(/^([A-Z]|[a-z]|[0-9]|_)*/);
     }
-    HaskellParser.prototype.parse = function (contents) {
-        var testFixture = new dto.TestFixtureDto();
+    HaskellParser.prototype.parseFile = function (path) {
+        var contents = fs.readFileSync(path, 'utf8').toString();
 
-        testFixture.fixtureName = "test";
-        testFixture.tests = _.range(Math.floor((Math.random() * 100) + 1)).map(function (i) {
-            return new dto.TestDto().withLineNum(Math.random()).withName(Math.random().toString());
-        });
-
-        return [testFixture];
+        return this.parse(contents);
     };
 
-    HaskellParser.prototype.parseFile = function (contents) {
+    HaskellParser.prototype.parse = function (contents) {
         var _this = this;
         var file = this.testSuite().then(function (suite) {
             return _this.test().many().map(function (entries) {
@@ -64,7 +57,15 @@ var HaskellParser = (function () {
     };
 
     HaskellParser.prototype.testTitle = function () {
-        var testName = this.testKeyword.skip(optWhitespace).skip(str("TestFixtures")).skip(this.colon).then(this.word);
+        var _this = this;
+        var testName = this.testKeyword.skip(optWhitespace).then(this.word).then(function (fixture) {
+            return _this.colon.then(_this.word).map(function (name) {
+                return {
+                    'module': fixture,
+                    'testName': name
+                };
+            });
+        });
 
         var fileName = regex(/^.*\.hs/);
 
@@ -82,7 +83,7 @@ var HaskellParser = (function () {
         return testName.then(function (name) {
             return sourceFile.map(function (sourceInfo) {
                 return {
-                    testName: name,
+                    info: name,
                     source: sourceInfo
                 };
             });

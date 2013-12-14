@@ -4,42 +4,34 @@
 ///<reference path='../../d.ts/interfaces.d.ts'/>
 
 
-import dto = require("./testDto");
+import fs = require("fs");
 
-var _ = require('underscore')._;
 var Parsimmon:any = require('parsimmon');
-
 var regex:any = Parsimmon.regex;
 var str:any = Parsimmon.string;
 var optWhitespace:any = Parsimmon.optWhitespace;
 
-export class HaskellParser implements IParser {
-    parse(contents:String):ITestFixture[]{
-        var testFixture = new dto.TestFixtureDto();
+export class HaskellParser {
 
-        testFixture.fixtureName = "test";
-        testFixture.tests = _.range( Math.floor((Math.random()*100)+1)).map(i =>
-            new dto.TestDto()
-                .withLineNum(Math.random())
-                .withName(Math.random().toString())
-        );
+    parseFile(path:string){
+        var contents = fs.readFileSync(path, 'utf8').toString();
 
-        return [testFixture];
+        return this.parse(contents);
     }
 
-    parseFile(contents:String){
-        var file = this.testSuite().then(suite => {
-            return this.test().many().map(entries => {
+    parse(contents:string){
+        var file =
+            this.testSuite().then(suite =>
+            this.test().many().map(entries => {
                 return {
                     suite: suite,
                     entries: entries
                 }
             })
-        }).skip(Parsimmon.all);
+            ).skip(Parsimmon.all);
 
         return file.parse(contents);
     }
-
 
     private between(parser, a, b){
         return str(a).then(parser).skip(str(b));
@@ -78,9 +70,14 @@ export class HaskellParser implements IParser {
         var testName =
             this.testKeyword
                 .skip(optWhitespace)
-                .skip(str("TestFixtures"))
-                .skip(this.colon)
-                .then(this.word);
+                .then(this.word).then(fixture =>
+                     this.colon.then(this.word).map(name => {
+                         return {
+                             'module': fixture,
+                             'testName': name
+                         }
+                     })
+                );
 
         var fileName = regex(/^.*\.hs/);
 
@@ -98,7 +95,7 @@ export class HaskellParser implements IParser {
         return testName.then(name => {
             return sourceFile.map(sourceInfo => {
                 return {
-                    testName: name,
+                    info: name,
                     source: sourceInfo
                 }
             });

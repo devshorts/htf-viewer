@@ -6,11 +6,22 @@ var chokidar = require("chokidar");
 
 var FileWatcher = (function () {
     function FileWatcher(watchItems, callback) {
+        var _this = this;
+        this.watchers = [];
         var config = { ignored: /[\/\\]\./, persistent: true };
 
-        var watcher = chokidar.watch("/Users/akropp/Projects/code/node/test-viewer", config);
+        _.forEach(watchItems, function (item) {
+            var watcher = chokidar.watch(item, config);
 
-        watcher.on('change', callback);
+            console.log("watching " + item);
+
+            watcher.on('change', function (path) {
+                console.log(path + " changed");
+                callback(path);
+            });
+
+            _this.watchers.push(watcher);
+        });
     }
     return FileWatcher;
 })();

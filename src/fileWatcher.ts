@@ -8,11 +8,23 @@ var chokidar = require("chokidar");
 
 export class FileWatcher{
 
+    private watchers = [];
+
+
     constructor(watchItems:string[], callback:(path:string)=> void){
         var config = {ignored: /[\/\\]\./, persistent: true};
 
-        var watcher = chokidar.watch("/Users/akropp/Projects/code/node/test-viewer", config);
+        _.forEach(watchItems, item => {
+            var watcher = chokidar.watch(item, config);
 
-        watcher.on('change', callback);
+            console.log("watching " + item);
+
+            watcher.on('change', path => {
+                console.log(path + " changed");
+                callback(path);
+            });
+
+            this.watchers.push(watcher);
+        });
     }
 }

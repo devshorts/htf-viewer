@@ -10,9 +10,7 @@ function get(file) {
 }
 
 function parseHaskell(test) {
-    var contents = get("shortTest.sample");
-
-    var result = parser.parseFile(contents);
+    var result = parser.parse(get("shortTest.sample"));
 
     console.log(result);
 
