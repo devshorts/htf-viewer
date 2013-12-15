@@ -6,5 +6,7 @@ function mainCntrl ($scope, liveLoaderService){
 
     liveLoaderService.start();
 
+    $scope.pass = true;
+
     $scope.data = "start!";
 }

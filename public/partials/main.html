@@ -1,1 +1,25 @@
-{{ data }}
+
+<nav class="top-bar" data-topbar>
+    <ul class="title-area">
+        <li class="name">
+            <h1><a href="#">{{ data.suite }}</a></h1>
+        </li>
+    </ul>
+
+    <section class="top-bar-section">
+        <!-- Right Nav Section -->
+        <ul class="right">
+            <li class="active">
+                <a href="#" ng-click="pass = !pass">
+                    View {{ pass == true ? 'Failed' : 'All' }}
+                </a>
+            </li>
+
+        </ul>
+    </section>
+</nav>
+
+
+<div ng-repeat="entry in data.entries | property:'test.status.pass':pass">
+    <test-entry test="entry.test"></test-entry>
+</div>

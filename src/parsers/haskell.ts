@@ -58,9 +58,9 @@ export class HaskellParser {
     test(){
         return this.testTitle().then(title => {
             return this.passFail().map(pf => {
+                title.status = pf;
                 return {
-                    test: title,
-                    status: pf
+                    test: title
                 }
             })
         });
@@ -74,7 +74,8 @@ export class HaskellParser {
                      this.colon.then(this.word).map(name => {
                          return {
                              'module': fixture,
-                             'testName': name
+                             'testName': name,
+                             'status': {}
                          }
                      })
                 );

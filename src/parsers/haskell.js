@@ -48,9 +48,9 @@ var HaskellParser = (function () {
         var _this = this;
         return this.testTitle().then(function (title) {
             return _this.passFail().map(function (pf) {
+                title.status = pf;
                 return {
-                    test: title,
-                    status: pf
+                    test: title
                 };
             });
         });
@@ -62,7 +62,8 @@ var HaskellParser = (function () {
             return _this.colon.then(_this.word).map(function (name) {
                 return {
                     'module': fixture,
-                    'testName': name
+                    'testName': name,
+                    'status': {}
                 };
             });
         });

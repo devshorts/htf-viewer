@@ -5,7 +5,7 @@ import express = require("express");
 import path = require("path");
 var io = require("socket.io");
 var _ = require('underscore')._;
-
+var Haskell = require ("./parsers/haskell");
 
 
 export class LiveReloader {
@@ -20,6 +20,10 @@ export class LiveReloader {
 
         this.socketManager.sockets.on('connection', socket => {
             console.log("received client");
+
+            var contents = new Haskell.HaskellParser().parseFile('/Users/akropp/Projects/code/Playground/ht1/dist/test/ht1-0.1.0.0-Ht1Tests.log');
+
+            this.trigger(contents);
 
             socket.on("disconnect", () => console.log("disconnected"));
         });

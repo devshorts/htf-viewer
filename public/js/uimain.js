@@ -2,6 +2,8 @@
 function bootStrap(app){
     initServices(app);
     initConfig(app);
+    registerDirectives(app);
+    initFilters(app);
 }
 
 function initConfig(app){

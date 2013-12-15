@@ -18,6 +18,6 @@ export function parseHaskell(test:INodeUnitTest){
     console.log(result);
 
     test.equal(result.entries.length, 7, "Didn't parse 7 results");
-    test.equal(result.entries[1].status.pass, false, "Didn't pick up on failed result");
+    test.equal(result.entries[1].test.status.pass, false, "Didn't pick up on failed result");
     test.done();
 }

@@ -4,15 +4,21 @@ var express = require("express");
 
 var io = require("socket.io");
 var _ = require('underscore')._;
+var Haskell = require("./parsers/haskell");
 
 var LiveReloader = (function () {
     function LiveReloader(server) {
+        var _this = this;
         this.socketManager = io.listen(server);
 
         this.socketManager.set('log level', 1);
 
         this.socketManager.sockets.on('connection', function (socket) {
             console.log("received client");
+
+            var contents = new Haskell.HaskellParser().parseFile('/Users/akropp/Projects/code/Playground/ht1/dist/test/ht1-0.1.0.0-Ht1Tests.log');
+
+            _this.trigger(contents);
 
             socket.on("disconnect", function () {
                 return console.log("disconnected");
