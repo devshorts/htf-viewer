@@ -9,9 +9,11 @@ var haskellParser = new Haskell.HaskellParser();
 
 var config = JSON.parse(fs.readFileSync(process.cwd() + "/hconfig.json"));
 
-var server = new Server.Server(process.env.PORT || 3000);
+var server = new Server.Server(process.env.PORT || 3000, config);
 
-var fileWatcher = new FileWatcher.FileWatcher(config.watch, function (path) {
+var watchPaths = [config.projectSource + "/dist/test/"];
+
+var fileWatcher = new FileWatcher.FileWatcher(watchPaths, function (path) {
     try  {
         var contents = haskellParser.parseFile(path);
 
@@ -22,6 +24,4 @@ var fileWatcher = new FileWatcher.FileWatcher(config.watch, function (path) {
 });
 
 server.start();
-
-open("http://localhost:" + server.port);
 //# sourceMappingURL=app.js.map

@@ -3,6 +3,7 @@
 import express = require('express');
 import http = require('http');
 import path = require('path');
+var routes = require("./routes");
 import clientReloader = require('./clientReloader');
 
 export class Server{
@@ -11,7 +12,7 @@ export class Server{
 
     private reloader:clientReloader.LiveReloader;
 
-    constructor(public port){
+    constructor(public port, public config){
 
     }
 
@@ -29,6 +30,8 @@ export class Server{
         this.app.use(express.methodOverride());
         this.app.use(this.app.router);
         this.app.use(express.static(path.join(__dirname, '../public')));
+
+        routes(this.app, this.config);
     }
 
     start (){

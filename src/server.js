@@ -2,11 +2,13 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var routes = require("./routes");
 var clientReloader = require('./clientReloader');
 
 var Server = (function () {
-    function Server(port) {
+    function Server(port, config) {
         this.port = port;
+        this.config = config;
         this.app = express();
     }
     Server.prototype.notifyConnections = function (data) {
@@ -23,6 +25,8 @@ var Server = (function () {
         this.app.use(express.methodOverride());
         this.app.use(this.app.router);
         this.app.use(express.static(path.join(__dirname, '../public')));
+
+        routes(this.app, this.config);
     };
 
     Server.prototype.start = function () {

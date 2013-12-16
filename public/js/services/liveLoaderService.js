@@ -1,7 +1,9 @@
 function registerLiveLoader(app){
-    app.factory("liveLoaderService", function($rootScope){
-        return new LiveLoaderService($rootScope);
-    })
+    app
+        .factory("liveLoaderService", function($rootScope){
+            return new LiveLoaderService($rootScope);
+        })
+        .service("cabalService", CabalService);
 }
 
 function LiveLoaderService($rootScope){
@@ -36,4 +38,10 @@ function LiveLoaderService($rootScope){
             $rootScope.$apply();
         });
     };
+}
+
+function CabalService($http){
+    this.cabalTest = function(success, error){
+        $http.get("/cabal-test").success(success).error(error);
+    }
 }

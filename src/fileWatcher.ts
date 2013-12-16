@@ -19,8 +19,8 @@ export class FileWatcher{
 
             console.log("watching " + item);
 
-            watcher.on('change', path => {
-                console.log(path + " changed");
+            watcher.on('all', (change, path) => {
+                console.log(path + change);
                 callback(path);
             });
 

@@ -15,8 +15,8 @@ var FileWatcher = (function () {
 
             console.log("watching " + item);
 
-            watcher.on('change', function (path) {
-                console.log(path + " changed");
+            watcher.on('all', function (change, path) {
+                console.log(path + change);
                 callback(path);
             });
 

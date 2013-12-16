@@ -18,7 +18,7 @@ function testDirective(){
     };
 }
 
-function mainNav(){
+function mainNav(cabalService){
     return {
         restrict: 'E',
         scope: {
@@ -50,7 +50,16 @@ function mainNav(){
                     }
                     return "unknown";
                 }();
-            }
+            };
+
+            scope.testCabal = function(){
+                cabalService.cabalTest(function(){
+                    console.log("yes");
+                },
+                function(){
+                    console.log("no");
+                })
+            };
         }
     }
 }
