@@ -5,10 +5,26 @@ The goal of this project is to provide a pretty viewable view of HTF haskell tes
 javascript tests.  A node server will listen for HTF test output changes, parse them, and do a push to a local angularUI
 for pretty display.
 
+Installation
+======
+
+Check out the repo:
+
+```
+git clone https://github.com/devshorts/test-viewer
+```
+
+Pull back the dependent node modules
+
+```
+npm install
+```
+
+
 Configuration
 =======
 
-Create an `hconfig.json` in the project folder with contents like
+Replace the `hconfig.json` in the root folder with a JSON config like
 
 ```
 {
@@ -19,7 +35,7 @@ Create an `hconfig.json` in the project folder with contents like
 Running
 =======
 
-And load up the app with `node app.js`.  After that, test-viewer will listen for HTF log file changes in the `dist/test/*.log`
+Load up the app with `node app.js`.  After that, test-viewer will listen for HTF log file changes in the `dist/test/*.log`
 folder and re-parse any haskell test output files after they are detected to have been changed.  Failed parsings are
 ignored.
 
