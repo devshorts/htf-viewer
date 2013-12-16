@@ -1,4 +1,4 @@
-test-viewer
+htf-viewer
 ===========
 
 The goal of this project is to provide a pretty viewable view of HTF haskell tests, kind of like what karma does for
