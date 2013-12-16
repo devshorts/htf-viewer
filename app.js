@@ -24,4 +24,6 @@ var fileWatcher = new FileWatcher.FileWatcher(watchPaths, function (path) {
 });
 
 server.start();
+
+open("http://localhost:" + server.port);
 //# sourceMappingURL=app.js.map

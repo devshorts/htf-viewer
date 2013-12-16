@@ -27,6 +27,6 @@ var fileWatcher = new FileWatcher.FileWatcher(watchPaths, path => {
 
 server.start();
 
-//open("http://localhost:" + server.port);
+open("http://localhost:" + server.port);
 
 
