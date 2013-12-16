@@ -22,10 +22,6 @@ export class LiveReloader {
         this.socketManager.sockets.on('connection', socket => {
             console.log("received client".blue);
 
-            var contents = new Haskell.HaskellParser().parseFile(__dirname + "/../parsing samples/shortTest.sample");
-
-            this.trigger(contents);
-
             socket.on("disconnect", () => console.log("disconnected".blue));
         });
 

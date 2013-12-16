@@ -3,24 +3,18 @@
 ///<reference path='../d.ts/vendor/colors.d.ts'/>
 var express = require("express");
 
-var Haskell = require("./parsers/haskell");
 var io = require("socket.io");
 var _ = require('underscore')._;
 var colors = require("colors");
 
 var LiveReloader = (function () {
     function LiveReloader(server) {
-        var _this = this;
         this.socketManager = io.listen(server);
 
         this.socketManager.set('log level', 1);
 
         this.socketManager.sockets.on('connection', function (socket) {
             console.log("received client".blue);
-
-            var contents = new Haskell.HaskellParser().parseFile(__dirname + "/../parsing samples/shortTest.sample");
-
-            _this.trigger(contents);
 
             socket.on("disconnect", function () {
                 return console.log("disconnected".blue);
