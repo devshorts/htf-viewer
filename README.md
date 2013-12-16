@@ -5,6 +5,44 @@ The goal of this project is to provide a pretty viewable view of HTF haskell tes
 javascript tests.  A node server will listen for HTF test output changes, parse them, and do a push to a local angularUI
 for pretty display.
 
+Use Case
+======
+Personally I write my haskell these days in sublime text, and while the console `cabal test` output is fine and dandy
+sometimes I wish I would see the results of all the tests, and not just the failed ones.  HTF, I noticed, writes test results
+to a specific log file in a format like:
+
+```
+Test suite Ht1Tests: RUNNING...
+[TEST] TestFixtures:targetMatches (src/tests/TestFixtures.hs:15)
++++ OK (0ms)
+
+[TEST] TestFixtures:isBuyableFalse (src/tests/TestFixtures.hs:18)
+assertEqual failed at src/tests/TestFixtures.hs:18
+* expected: False
+* but got: True
+* diff:
+F Fals
+S Tru
+C e<......>C
+*** Failed! (81ms)
+
+[TEST] TestFixtures:updateCart (src/tests/TestFixtures.hs:21)
++++ OK (0ms)
+
+* Tests:    4
+* Passed:   4
+* Pending:  0
+* Failures: 0
+* Errors:   0
+
+Total execution time: 90ms
+Test suite Tutorial: PASS
+Test suite logged to: dist/test/HTF-0.11.0.1-Tutorial.log
+```
+
+And I thought it'd be fun (and look nice) to be able to spin up a browser and have these files auto watched.  This way I can get a
+clean overview of what all my tests did in a constantly ready UI.
+
 Installation
 ======
 
