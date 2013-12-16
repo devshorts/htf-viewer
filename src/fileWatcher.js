@@ -2,6 +2,7 @@
 ///<reference path='../d.ts/vendor/node.d.ts'/>
 var _ = require("underscore")._;
 
+var colors = require('colors');
 var chokidar = require("chokidar");
 
 var FileWatcher = (function () {
@@ -13,10 +14,9 @@ var FileWatcher = (function () {
         _.forEach(watchItems, function (item) {
             var watcher = chokidar.watch(item, config);
 
-            console.log("watching " + item);
+            console.log(("watching " + item).green);
 
             watcher.on('all', function (change, path) {
-                console.log(path + change);
                 callback(path);
             });
 

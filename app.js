@@ -2,12 +2,14 @@
 var Server = require("./src/server");
 var Haskell = require("./src/parsers/haskell");
 var FileWatcher = require("./src/fileWatcher");
-var fs = require("fs");
+var Config = require("./src/config");
+
 var open = require("open");
+var colors = require("colors");
 
 var haskellParser = new Haskell.HaskellParser();
 
-var config = JSON.parse(fs.readFileSync(process.cwd() + "/hconfig.json").toString());
+var config = new Config.Config().getConfig();
 
 var server = new Server.Server(process.env.PORT || config.port, config);
 
@@ -18,10 +20,13 @@ var fileWatcher = new FileWatcher.FileWatcher(watchPaths, function (path) {
         var contents = haskellParser.parseFile(path);
 
         server.notifyConnections(contents);
+
+        console.log((path + " changed").cyan);
     } catch (e) {
-        console.log("couldn't parse " + path);
     }
 });
 
 server.start();
+
+open("http://localhost:" + server.port);
 //# sourceMappingURL=app.js.map

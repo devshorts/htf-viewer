@@ -1,10 +1,10 @@
 ///<reference path='../_all.d.ts'/>
 
-import express = require('express');
-import http = require('http');
-import path = require('path');
-import clientReloader = require('./clientReloader');
-var routes:any = require("./routes");
+import express          = require('express');
+import http             = require('http');
+import path             = require('path');
+import clientReloader   = require('./clientReloader');
+var routes:any          = require("./routes");
 
 export class Server{
 
@@ -24,7 +24,7 @@ export class Server{
         // all environments
         this.app.set('port', this.port);
         this.app.use(express.favicon());
-        this.app.use(express.logger('dev'));
+        //this.app.use(express.logger('dev'));
         this.app.use(express.json());
         this.app.use(express.urlencoded());
         this.app.use(express.methodOverride());

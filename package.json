@@ -1,17 +1,36 @@
 {
-  "name": "application-name",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node app.js"
-  },
-  "dependencies": {
-    "express": "3.4.7",
-    "underscore": "1.5.2",
-    "open": "0.0.4",
-    "parsimmon":"0.0.6",
-    "socket.io":"0.9.16",
-    "nodeunit":"0.8.2",
-    "chokidar":"0.7.0"
-  }
+    "name": "htf-viewer",
+    "author": "Anton Kropp <akropp@gmail.com>",
+    "description": "a pretty viewer and file watcher for HTF tests from cabal projects",
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/devshorts/htf-viewer"
+    },
+    "keywords": [
+        "haskell",
+        "http",
+        "server",
+        "testing",
+        "ui",
+        "cabal"
+    ],
+    "analyze": false,
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "express": "3.4.7",
+        "underscore": "1.5.2",
+        "open": "0.0.4",
+        "parsimmon": "0.0.6",
+        "socket.io": "0.9.16",
+        "nodeunit": "0.8.2",
+        "chokidar": "0.7.0",
+        "colors":"0.6.2"
+    },
+    "license": "MIT",
+    "engines": {
+        "node": ">=0.6"
+    }
 }

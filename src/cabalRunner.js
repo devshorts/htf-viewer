@@ -1,5 +1,7 @@
 ///<reference path='../_all.d.ts'/>
+///<reference path='../d.ts/vendor/colors.d.ts'/>
 var exec = require('child_process');
+var colors = require("colors");
 
 var CabalRunner = (function () {
     function CabalRunner(projectSource) {
@@ -9,11 +11,7 @@ var CabalRunner = (function () {
         exec.exec("cabal test", {
             cwd: this.projectSource
         }, function (error, stdout, stderr) {
-            console.log('stdout: ' + stdout);
-            console.log('stderr: ' + stderr);
-            if (error !== null) {
-                console.log('exec error: ' + error);
-            }
+            console.log("cabal-test OK".green);
 
             callback();
         });

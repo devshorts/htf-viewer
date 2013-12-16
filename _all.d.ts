@@ -4,4 +4,5 @@
 ///<reference path='d.ts/vendor/underscore.d.ts'/>
 ///<reference path='d.ts/vendor/socket.io.d.ts'/>
 ///<reference path='d.ts/vendor/nodeunit.d.ts'/>
+///<reference path='d.ts/vendor/colors.d.ts'/>
 ///<reference path='d.ts/interfaces.d.ts'/>
