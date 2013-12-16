@@ -1,5 +1,6 @@
 lib-cov
 .idea
+.sass-cache
 *.seed
 *.log
 *.csv
@@ -7,10 +8,12 @@ lib-cov
 *.out
 *.pid
 *.gz
+*.iml
 
 pids
 logs
 results
 
 npm-debug.log
+.npmrc
 node_modules

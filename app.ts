@@ -8,29 +8,33 @@ import fs           = require("fs");
 var open:any        = require("open");
 var colors          = require("colors");
 
-var haskellParser = new Haskell.HaskellParser();
+export class App{
+    run(){
+        var haskellParser = new Haskell.HaskellParser();
 
-var config = new Config.Config().getConfig();
+        var config = new Config.Config().getConfig();
 
-var server = new Server.Server(process.env.PORT || config.port, config);
+        var server = new Server.Server(process.env.PORT || config.port, config);
 
-var watchPaths = [config.projectSource + "/dist/test/"];
+        var watchPaths = [config.projectSource + "/dist/test/"];
 
-var fileWatcher = new FileWatcher.FileWatcher(watchPaths, path => {
-    try{
-        var contents = haskellParser.parseFile(path);
+        var fileWatcher = new FileWatcher.FileWatcher(watchPaths, path => {
+            try{
+                var contents = haskellParser.parseFile(path);
 
-        server.notifyConnections(contents);
+                server.notifyConnections(contents);
 
-        console.log((path + " changed").cyan)
+                console.log((path + " changed").cyan)
+            }
+            catch(e){
+
+            }
+        });
+
+        server.start();
+
+        open("http://localhost:" + server.port);
     }
-    catch(e){
-
-    }
-});
-
-server.start();
-
-open("http://localhost:" + server.port);
+}
 
 

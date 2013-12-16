@@ -5,6 +5,21 @@ The goal of this project is to provide a pretty viewable view of HTF haskell tes
 javascript tests.  A node server will listen for HTF test output changes, parse them, and do a push to a local angularUI
 for pretty display.
 
+Installation
+======
+
+Check out the repo:
+
+```
+git clone https://github.com/devshorts/test-viewer
+```
+
+Pull back the dependent node modules
+
+```
+npm install
+```
+
 Use Case
 ======
 Personally I write my haskell these days in sublime text, and while the console `cabal test` output is fine and dandy
@@ -43,32 +58,6 @@ Test suite logged to: dist/test/HTF-0.11.0.1-Tutorial.log
 And I thought it'd be fun (and look nice) to be able to spin up a browser and have these files auto watched.  This way I can get a
 clean overview of what all my tests did in a constantly ready UI.
 
-Installation
-======
-
-Check out the repo:
-
-```
-git clone https://github.com/devshorts/test-viewer
-```
-
-Pull back the dependent node modules
-
-```
-npm install
-```
-
-Development
-=======
-If you want to add the to the repo, you'll need the following installed
-
-- typescript
-- node
-- foundation
-- compass
-- ruby
-- haskell (with HTF) (optional, but why wouldn't you?)
-
 
 Configuration
 =======
@@ -94,7 +83,20 @@ ignored.
 Hitting the `cabal test` button does what it says it'll do. It'll run cabal test for the configured project source, which
 will trigger a re-parse of the output test files.
 
+
 Screen Shots
 =======
 
 ![Main page](readmeImg/app.png)
+
+
+Development
+=======
+If you want to add the to the repo, you'll need the following installed
+
+- typescript
+- node
+- foundation
+- compass
+- ruby
+- haskell (with HTF) (optional, but why wouldn't you?)
