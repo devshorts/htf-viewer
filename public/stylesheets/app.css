@@ -1439,10 +1439,14 @@ th.hide-for-touch { display: table-cell !important; }
 
 .test-item { padding-bottom: 10px; padding-left: 10px; padding-right: 10px; padding-top: 10px; font-family: monospace; }
 
-.test-item:nth-child(even) { background-color: #c7c7c7; }
+.test-item:nth-child(even) { background-color: #fafafa; }
 
 .test-header { padding-bottom: 10px; }
 
 .contents { padding-top: 20px; }
 
 .raw-error { margin-top: 20px; }
+
+.panel.callout { background: rgba(240, 83, 115, 0.15); border-color: rgba(0, 0, 0, 0.17); }
+
+.top-bar-section ul.right li { width: 150px; }

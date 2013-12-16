@@ -3,6 +3,7 @@
         suite="data.suite"
         view-test-type="viewType"
         fixtures="fixtures"
+        search="search"
         on-selected="fixtureSelected">
 
 
@@ -23,7 +24,7 @@
 
         <div class="tests">
             <div class="test-item"
-                 ng-repeat="entry in data.entries | property:'test.status.pass':testFilterType | orderBy:sort:reverse">
+                 ng-repeat="entry in data.entries | property:'test.status.pass':testFilterType | orderBy:sort:reverse | search:searchText">
                 <div class="test-content">
                     <test-entry test="entry.test"></test-entry>
                 </div>

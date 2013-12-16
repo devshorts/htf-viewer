@@ -5,18 +5,33 @@
         </li>
     </ul>
 
+
+
     <section class="top-bar-section">
         <!-- Right Nav Section -->
         <ul class="right">
             <li class="has-dropdown">
-                <a href="#">View Tests</a>
+                <a href="#">{{ viewing }} </a>
                 <ul class="dropdown">
-                    <li><a href="#" ng-click="viewTestType('all')">All tests</a></li>
-                    <li><a href="#" ng-click="viewTestType('pass')">Only failed</a></li>
-                    <li><a href="#" ng-click="viewTestType('fail')">Only passed</a></li>
+                    <li><a href="#" ng-click="viewType('all')">All tests</a></li>
+                    <li><a href="#" ng-click="viewType('pass')">Only failed</a></li>
+                    <li><a href="#" ng-click="viewType('fail')">Only passed</a></li>
                 </ul>
             </li>
 
+        </ul>
+
+        <!-- Left Nav Section -->
+        <ul class="left">
+            <li class="has-form">
+                <div class="row collapse">
+                    <div class="large-12 small-9 columns">
+                        <input type="text" placeholder="Find Tests" ng-model="testSearch"
+                                ng-change="search(testSearch)">
+                    </div>
+
+                </div>
+            </li>
         </ul>
     </section>
 </nav>

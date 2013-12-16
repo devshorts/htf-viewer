@@ -30,7 +30,7 @@ body{
 }
 
 .test-item:nth-child(even){
-  background-color: #c7c7c7;
+  background-color: #fafafa;
 }
 
 .test-header{
@@ -43,4 +43,17 @@ body{
 
 .raw-error{
   margin-top:20px;
+}
+
+.panel.callout{
+    background: rgba(240, 83, 115, 0.15);
+    border-color: rgba(0, 0, 0, 0.17);
+}
+
+.top-bar-section{
+  ul.right{
+    li{
+      width:150px;
+    }
+  }
 }

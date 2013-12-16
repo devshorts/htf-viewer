@@ -14,6 +14,8 @@ function mainCntrl ($scope, liveLoaderService){
 
     $scope.pass = true;
 
+    $scope.searchText = undefined;
+
     $scope.fixtureSelected = function(fixture){
         if(_.isUndefined(fixture)){
             $scope.data = $.extend({}, $scope.rawData);
@@ -32,6 +34,10 @@ function mainCntrl ($scope, liveLoaderService){
     // view all tests
     $scope.testFilterType = undefined;
 
+    $scope.search = function(text){
+        $scope.searchText = text;
+    };
+
     $scope.viewType = function(type){
         switch(type){
             case "all": $scope.testFilterType = undefined;break;
@@ -40,5 +46,5 @@ function mainCntrl ($scope, liveLoaderService){
         }
 
         return undefined;
-    }
+    };
 }

@@ -11,7 +11,7 @@ function testDirective(){
         },
         templateUrl: 'partials/testEntry.html',
         link: function (scope, element) {
-            scope.bgColor = scope.test.status.pass ? "green" : "red";
+            scope.bgColor = scope.test.status.pass ? "black" : "red";
 
             scope.showError = false;
         }
@@ -25,7 +25,8 @@ function mainNav(){
             fixtures: "=",
             onSelected: "=",
             viewTestType: "=",
-            suite: "="
+            suite: "=",
+            search: "="
         },
         transclude:true,
         templateUrl: 'partials/mainNav.html',
@@ -34,6 +35,21 @@ function mainNav(){
                 scope.onSelected(fixture);
 
                 scope.selectedFixture = fixture;
+            };
+
+            scope.viewing = "All Tests";
+
+            scope.viewType = function(type){
+                scope.viewTestType(type);
+
+                scope.viewing = function(){
+                    switch(type){
+                        case "all": return "All Tests";
+                        case "fail": return "Passing Tests";
+                        case "pass": return "Failing Tests";
+                    }
+                    return "unknown";
+                }();
             }
         }
     }
