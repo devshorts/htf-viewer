@@ -1,13 +1,13 @@
-<div class="row">
-    <div class="small-3 columns">
-        {{ test.info.testName }}
-    </div>
-
+<div class="row" ng-style="{'color': bgColor}">
     <div class="small-3 columns">
         {{ test.source.fileName }}
     </div>
 
     <div class="small-3 columns">
-        {{ test.status.pass }}
+        {{ test.info.testName }}
+    </div>
+
+    <div class="small-3 columns">
+        {{ test.status.time }} ms
     </div>
 </div>

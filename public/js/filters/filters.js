@@ -18,6 +18,10 @@ function property(){
     }
 
     return function (array, propertyString, target){
+        if(_.isUndefined(target)){
+            return array;
+        }
+
         var properties = parseString(propertyString);
 
         return _.filter(array, function(item){

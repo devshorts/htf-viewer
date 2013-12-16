@@ -1,0 +1,26 @@
+<nav class="top-bar" data-topbar>
+    <ul class="title-area">
+        <li class="name">
+            <h1><a href="#">{{ suite }}</a></h1>
+        </li>
+    </ul>
+
+    <section class="top-bar-section">
+        <!-- Right Nav Section -->
+        <ul class="right">
+            <li class="has-dropdown">
+                <a href="#">View</a>
+                <ul class="dropdown">
+                    <li><a href="#" ng-click="viewTestType('all')">All tests</a></li>
+                    <li><a href="#" ng-click="viewTestType('pass')">Only failed</a></li>
+                    <li><a href="#" ng-click="viewTestType('fail')">Only passed</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </section>
+</nav>
+
+<script>
+    $(document).foundation();
+</script>

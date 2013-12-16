@@ -1,25 +1,25 @@
 
-<nav class="top-bar" data-topbar>
-    <ul class="title-area">
-        <li class="name">
-            <h1><a href="#">{{ data.suite }}</a></h1>
-        </li>
-    </ul>
-
-    <section class="top-bar-section">
-        <!-- Right Nav Section -->
-        <ul class="right">
-            <li class="active">
-                <a href="#" ng-click="pass = !pass">
-                    View {{ pass == true ? 'Failed' : 'All' }}
-                </a>
-            </li>
-
-        </ul>
-    </section>
-</nav>
+<main-nav
+        suite="data.suite"
+        view-test-type="viewType"
+        onSelected="fixtureSelected(fixture)"></main-nav>
 
 
-<div ng-repeat="entry in data.entries | property:'test.status.pass':pass">
+
+<div class="row">
+    <div class="small-3 columns">
+        <a href="#" ng-click="sort='test.source.fileName'; reverse = !reverse">File Name</a>
+    </div>
+
+    <div class="small-3 columns">
+        <a href="#" ng-click="sort='test.info.testName'; reverse = !reverse">Test Name</a>
+    </div>
+
+    <div class="small-3 columns">
+        <a href="#" ng-click="sort='test.status.time'; reverse = !reverse">Duration</a>
+    </div>
+</div>
+
+<div ng-repeat="entry in data.entries | property:'test.status.pass':testFilterType | orderBy:sort:reverse">
     <test-entry test="entry.test"></test-entry>
 </div>
