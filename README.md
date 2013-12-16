@@ -8,16 +8,14 @@ for pretty display.
 Installation
 ======
 
-Check out the repo:
-
 ```
-git clone https://github.com/devshorts/test-viewer
+> npm install htf-viewer -g
 ```
 
-Pull back the dependent node modules
+And to run, go to your haskell source directory and run
 
 ```
-npm install
+> htf-viewer
 ```
 
 Use Case
