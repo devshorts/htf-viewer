@@ -3,8 +3,8 @@
 import express = require('express');
 import http = require('http');
 import path = require('path');
-var routes = require("./routes");
 import clientReloader = require('./clientReloader');
+var routes:any = require("./routes");
 
 export class Server{
 

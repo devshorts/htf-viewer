@@ -2,8 +2,8 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
-var routes = require("./routes");
 var clientReloader = require('./clientReloader');
+var routes = require("./routes");
 
 var Server = (function () {
     function Server(port, config) {

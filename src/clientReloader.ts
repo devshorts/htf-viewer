@@ -3,9 +3,9 @@
 
 import express = require("express");
 import path = require("path");
+import Haskell = require ("./parsers/haskell");
 var io = require("socket.io");
 var _ = require('underscore')._;
-var Haskell = require ("./parsers/haskell");
 
 
 export class LiveReloader {

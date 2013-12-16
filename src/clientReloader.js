@@ -2,9 +2,9 @@
 ///<reference path='../d.ts/vendor/socket.io.d.ts'/>
 var express = require("express");
 
+var Haskell = require("./parsers/haskell");
 var io = require("socket.io");
 var _ = require('underscore')._;
-var Haskell = require("./parsers/haskell");
 
 var LiveReloader = (function () {
     function LiveReloader(server) {

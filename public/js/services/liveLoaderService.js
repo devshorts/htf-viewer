@@ -21,6 +21,13 @@ function LiveLoaderService($rootScope){
         });
     };
 
+    function basePath(){
+        var pathArray = window.location.href.split( '/' );
+        var protocol = pathArray[0];
+        var host = pathArray[2];
+        return protocol + '//' + host;
+    }
+
     this.start = function(){
         if(this.started){
             return;
@@ -28,7 +35,9 @@ function LiveLoaderService($rootScope){
 
         var self = this;
 
-        var socket = io.connect('http://localhost:3000');
+        console.log(basePath());
+
+        var socket = io.connect(basePath());
 
         socket.on('data', function (data) {
             _.forEach(self.allCallbacks, function(callback){

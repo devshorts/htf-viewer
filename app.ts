@@ -8,9 +8,9 @@ var open:any        = require("open");
 
 var haskellParser = new Haskell.HaskellParser();
 
-var config = JSON.parse(fs.readFileSync(process.cwd() + "/hconfig.json"));
+var config = JSON.parse(fs.readFileSync(process.cwd() + "/hconfig.json").toString());
 
-var server = new Server.Server(process.env.PORT || 3000, config);
+var server = new Server.Server(process.env.PORT || config.port, config);
 
 var watchPaths = [config.projectSource + "/dist/test/"];
 
@@ -27,6 +27,6 @@ var fileWatcher = new FileWatcher.FileWatcher(watchPaths, path => {
 
 server.start();
 
-open("http://localhost:" + server.port);
+//open("http://localhost:" + server.port);
 
 
