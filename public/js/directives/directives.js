@@ -37,16 +37,16 @@ function mainNav(){
                 scope.selectedFixture = fixture;
             };
 
-            scope.viewing = "All Tests";
+            scope.viewing = "All";
 
             scope.viewType = function(type){
                 scope.viewTestType(type);
 
                 scope.viewing = function(){
                     switch(type){
-                        case "all": return "All Tests";
-                        case "fail": return "Passing Tests";
-                        case "pass": return "Failing Tests";
+                        case "all": return "All";
+                        case "fail": return "Passing";
+                        case "pass": return "Failing";
                     }
                     return "unknown";
                 }();

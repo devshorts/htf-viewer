@@ -11,12 +11,15 @@
         <!-- Right Nav Section -->
         <ul class="right">
             <li class="has-dropdown">
-                <a href="#">{{ viewing }} </a>
+                <a href="#">View {{ viewing }} </a>
                 <ul class="dropdown">
                     <li><a href="#" ng-click="viewType('all')">All tests</a></li>
                     <li><a href="#" ng-click="viewType('pass')">Only failed</a></li>
                     <li><a href="#" ng-click="viewType('fail')">Only passed</a></li>
                 </ul>
+            </li>
+            <li class="has-form">
+                <a href="http://foundation.zurb.com/docs" class="button">Cabal Test</a>
             </li>
 
         </ul>
@@ -32,6 +35,9 @@
 
                 </div>
             </li>
+
+
+
         </ul>
     </section>
 </nav>
