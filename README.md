@@ -20,6 +20,17 @@ Pull back the dependent node modules
 npm install
 ```
 
+Development
+=======
+If you want to add the to the repo, you'll need the following installed
+
+- typescript
+- node
+- foundation
+- compass
+- ruby
+- haskell (with HTF) (optional, but why wouldn't you?)
+
 
 Configuration
 =======
