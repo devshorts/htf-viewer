@@ -26,3 +26,27 @@ C e<......>C
 
 [TEST] TestFixtures:getNth_one_element_later (src/tests/TestFixtures.hs:63)
 +++ OK (0ms)
+
+[TEST] Main:nonEmpty (tests/Tutorial.hs:17)
++++ OK (0ms)
+
+[TEST] Main:empty (tests/Tutorial.hs:19)
++++ OK (0ms)
+
+[TEST] Main:reverse (tests/Tutorial.hs:22)
+Passed 100 tests.
++++ OK (16ms)
+
+[TEST] Main:reverseReplay (tests/Tutorial.hs:24)
+Passed 100 tests.
++++ OK (5ms)
+
+* Tests:    4
+* Passed:   4
+* Pending:  0
+* Failures: 0
+* Errors:   0
+
+Total execution time: 90ms
+Test suite Tutorial: PASS
+Test suite logged to: dist/test/HTF-0.11.0.1-Tutorial.log

@@ -16,7 +16,7 @@ var LiveReloader = (function () {
         this.socketManager.sockets.on('connection', function (socket) {
             console.log("received client");
 
-            var contents = new Haskell.HaskellParser().parseFile('/Users/akropp/Projects/code/Playground/ht1/dist/test/ht1-0.1.0.0-Ht1Tests.log');
+            var contents = new Haskell.HaskellParser().parseFile(__dirname + "/../parsing samples/shortTest.sample");
 
             _this.trigger(contents);
 

@@ -12,6 +12,8 @@ function testDirective(){
         templateUrl: 'partials/testEntry.html',
         link: function (scope, element) {
             scope.bgColor = scope.test.status.pass ? "green" : "red";
+
+            scope.showError = false;
         }
     };
 }
@@ -21,13 +23,18 @@ function mainNav(){
         restrict: 'E',
         scope: {
             fixtures: "=",
-            onSelected: "&",
+            onSelected: "=",
             viewTestType: "=",
             suite: "="
         },
+        transclude:true,
         templateUrl: 'partials/mainNav.html',
         link: function(scope, element){
+            scope.selectFixture = function(fixture){
+                scope.onSelected(fixture);
 
+                scope.selectedFixture = fixture;
+            }
         }
     }
 }

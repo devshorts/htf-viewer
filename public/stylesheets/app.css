@@ -1431,3 +1431,18 @@ td.hide-for-touch { display: table-cell !important; }
 th.hide-for-touch { display: table-cell !important; }
 
 .touch th.show-for-touch { display: table-cell !important; }
+
+.side-bar { background: #fafafa; padding-top: 20px; }
+.side-bar li { padding-left: 20px; }
+
+.row { margin-left: 30px; }
+
+.test-item { padding-bottom: 10px; padding-left: 10px; padding-right: 10px; padding-top: 10px; font-family: monospace; }
+
+.test-item:nth-child(even) { background-color: #c7c7c7; }
+
+.test-header { padding-bottom: 10px; }
+
+.contents { padding-top: 20px; }
+
+.raw-error { margin-top: 20px; }

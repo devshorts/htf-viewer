@@ -1,6 +1,6 @@
-<div class="row" ng-style="{'color': bgColor}">
+<div class="row" ng-style="{'color': bgColor}" ng-click="showError = !showError">
     <div class="small-3 columns">
-        {{ test.source.fileName }}
+        {{ test.info.module }}
     </div>
 
     <div class="small-3 columns">
@@ -10,4 +10,11 @@
     <div class="small-3 columns">
         {{ test.status.time }} ms
     </div>
+</div>
+
+<div class="raw-error panel callout radius" ng-show="showError && !test.status.pass">
+    <h5>Raw error:</h5>
+    <pre>
+{{ test.status.raw }}
+    </pre>
 </div>

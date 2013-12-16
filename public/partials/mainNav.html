@@ -9,7 +9,7 @@
         <!-- Right Nav Section -->
         <ul class="right">
             <li class="has-dropdown">
-                <a href="#">View</a>
+                <a href="#">View Tests</a>
                 <ul class="dropdown">
                     <li><a href="#" ng-click="viewTestType('all')">All tests</a></li>
                     <li><a href="#" ng-click="viewTestType('pass')">Only failed</a></li>
@@ -20,6 +20,27 @@
         </ul>
     </section>
 </nav>
+
+<div class="row">
+    <ul class="side-nav large-3 medium-4 columns side-bar">
+        <li><h4>Test Fixtures</h4></li>
+        <li ng-class="selectedFixture == undefined ? 'active' : ''">
+            <a href="#"
+               ng-click="selectFixture(undefined)">
+                All
+            </a>
+        </li>
+        <li ng-repeat="fixture in fixtures" ng-class="selectedFixture == fixture ? 'active' : ''">
+            <a href="#"
+               ng-click="selectFixture(fixture)">
+                {{ fixture }}
+            </a>
+        </li>
+    </ul>
+
+    <div ng-transclude class="large-9 medium-8 columns"></div>
+</div>
+
 
 <script>
     $(document).foundation();

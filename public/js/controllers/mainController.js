@@ -1,7 +1,13 @@
 function mainCntrl ($scope, liveLoaderService){
 
     liveLoaderService.register(function(data){
-        $scope.data = data;
+        $scope.rawData = data;
+
+        $scope.data = $.extend({}, $scope.rawData);
+
+        $scope.fixtures = _.keys(_.groupBy($scope.rawData.entries, function(item){
+            return item.test.info.module;
+        }));
     });
 
     liveLoaderService.start();
@@ -9,7 +15,15 @@ function mainCntrl ($scope, liveLoaderService){
     $scope.pass = true;
 
     $scope.fixtureSelected = function(fixture){
-        console.log("chose " + fixture);
+        if(_.isUndefined(fixture)){
+            $scope.data = $.extend({}, $scope.rawData);
+
+            return;
+        }
+
+        $scope.data.entries = _.filter($scope.rawData.entries, function(entry){
+            return entry.test.info.module == fixture;
+        });
     };
 
     $scope.sort = "";
