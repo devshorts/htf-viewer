@@ -73,11 +73,14 @@ If you want to add the to the repo, you'll need the following installed
 Configuration
 =======
 
-Replace the `hconfig.json` in the root folder with a JSON config like
+If you want, you can specify the project source and port in a `hconfig.json` file
+in your haskell directory.  However, by default it will use port 3000 and use the local directory
+as the haskell project root. Your haskell projects should be a cabalized project using HTF.
 
 ```
 {
-    "projectSource": "/Users/devshorts/Projects/code/haskellProject"
+    "projectSource": "/Users/devshorts/Projects/code/haskellProject",
+    "port": 3000
 }
 ```
 
