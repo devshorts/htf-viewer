@@ -1,4 +1,5 @@
 ///<reference path='_all.d.ts'/>
+///<reference path='d.ts/interfaces.d.ts'/>
 
 import Server       = require("./src/server");
 import Haskell      = require("./src/parsers/haskell");
@@ -7,10 +8,15 @@ import Config       = require("./src/config");
 import fs           = require("fs");
 var open:any        = require("open");
 var colors          = require("colors");
+var _               = require("underscore")._;
 
 export class App{
-    run(){
-        var haskellParser = new Haskell.HaskellParser();
+    run(parsers:IParser[]){
+        if(_.isUndefined(parsers)){
+            parsers = [];
+        }
+
+        parsers.push(new Haskell.HaskellParser());
 
         var config = new Config.Config().getConfig();
 
@@ -20,11 +26,15 @@ export class App{
 
         var fileWatcher = new FileWatcher.FileWatcher(watchPaths, path => {
             try{
-                var contents = haskellParser.parseFile(path);
+                for(var i = 0; i< parsers.length; i++){
+                    var contents = parsers[i].parseFile(path);
 
-                server.notifyConnections(contents);
+                    server.notifyConnections(contents);
 
-                console.log((path + " changed").cyan)
+                    console.log((path + " changed").cyan);
+
+                    return;
+                }
             }
             catch(e){
 

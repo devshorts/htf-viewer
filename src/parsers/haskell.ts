@@ -4,14 +4,13 @@
 ///<reference path='../../d.ts/interfaces.d.ts'/>
 
 
-import fs = require("fs");
+import fs               = require("fs");
+var Parsimmon:any       = require('parsimmon');
+var regex:any           = Parsimmon.regex;
+var str:any             = Parsimmon.string;
+var optWhitespace:any   = Parsimmon.optWhitespace;
 
-var Parsimmon:any = require('parsimmon');
-var regex:any = Parsimmon.regex;
-var str:any = Parsimmon.string;
-var optWhitespace:any = Parsimmon.optWhitespace;
-
-export class HaskellParser {
+export class HaskellParser implements IParser {
 
     parseFile(path:string){
         var contents = fs.readFileSync(path, 'utf8').toString();

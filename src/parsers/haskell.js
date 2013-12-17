@@ -3,7 +3,6 @@
 ///<reference path='../../d.ts/vendor/underscore.d.ts'/>
 ///<reference path='../../d.ts/interfaces.d.ts'/>
 var fs = require("fs");
-
 var Parsimmon = require('parsimmon');
 var regex = Parsimmon.regex;
 var str = Parsimmon.string;

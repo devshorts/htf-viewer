@@ -2,4 +2,4 @@
 
 var app = require("../app.js");
 
-new app.App().run();
+new app.App().run([]);

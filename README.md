@@ -81,6 +81,18 @@ ignored.
 Hitting the `cabal test` button does what it says it'll do. It'll run cabal test for the configured project source, which
 will trigger a re-parse of the output test files.
 
+Adding more parsers
+======
+If the parser that is included isn't robust enough, you can create a wrapper around this package and inject your own
+parsers to the server.  Do the following
+
+```
+var test-viewer = require("htf-viewer").App;
+
+new test-viewer([list of parsers]).run();
+```
+
+The default parser will be appended to your parser list. The first parser that succeeds will be the one that is used.
 
 Screen Shots
 =======
